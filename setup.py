@@ -5,7 +5,7 @@ from setuptools import find_packages
 setup(
     name="argtype",
     version="0.0",
-    packages=find_packages(exclude=["test"]),
+    packages=find_packages(exclude=["test", "examples"]),
     url="",
     license="",
     author="Marcin Przewięźlikowski",
