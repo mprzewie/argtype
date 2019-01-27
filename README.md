@@ -65,6 +65,18 @@ optional arguments:
 
 ## Details
 
+### Why do I need to specify the return type twice?
+
+```python
+parser: TypedArgumentParser[Config] = TypedArgumentParser(Config)
+```
+In the above line, passing the configuring `NamedTuple` type to the constructor (on the right) lets the parser perform it's magic underneath
+and return the parsed arguments as the specified type.
+
+Type annotation of the parser (on the left) is not necessary, but it will allow IDEs such [PyCharm](https://www.jetbrains.com/pycharm/) 
+infer the type of the `NamedTuple` returned by the parser.
+
+
 ### Type annotation of the arguments 
 If a type of a field in configuring `NamedTuple` has been specified, i.e:
 ```python
