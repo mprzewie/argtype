@@ -1,5 +1,7 @@
-from argparse import ArgumentParser, Namespace, ArgumentDefaultsHelpFormatter
-from typing import TypeVar, Generic, NamedTuple, Optional, Sequence, Type, Dict, Any
+from argparse import ArgumentParser, Namespace
+from typing import TypeVar, Generic, NamedTuple, Optional, Sequence, Dict, Any
+
+from argtype.doc.google import OMIT_LINES
 
 _DESCRIPTION_KEY = "description"
 NamedTupleType = TypeVar("NamedTupleType", bound=NamedTuple, covariant=True)
@@ -52,9 +54,13 @@ class TypedArgumentParser(ArgumentParser, Generic[NamedTupleType]):
         }
 
     @property
-    def _doc_dict(self) -> Dict[str, str]:
+    def _doc_dict(self, omit_lines: Sequence[str] = OMIT_LINES) -> Dict[str, str]:
         docstring = self.named_tuple_type.__doc__
-        lines = [l.lstrip() for l in docstring.split("\n")]
+        lines = [
+            l.lstrip()
+            for l in docstring.split("\n")
+            if l.lstrip().rstrip() not in omit_lines
+        ]
         doc_dict = {}
         current_field = None
         for doc_line in lines:
